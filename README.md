@@ -30,14 +30,14 @@ every 10 completed rows. The more level you have - the more points you get from 
 3. Open the project's folder in File Explorer and move all files from the archive into it:<br />
 ![image](https://github.com/demianblogan/Game-The_Simplest_Tetris/assets/105989117/726509fb-4f07-47b1-a87b-ecb91efcbe6c)
 
-4. To make all those files visible in your project, click the button "Show all files" in Solution Explorer:<br />
+4. To make all those files visible in your project, click the button "Show all files" in Solution Explorer. After this select them, RMB on them and click "Include in Project":<br />
 ![image](https://github.com/demianblogan/Game-The_Simplest_Tetris/assets/105989117/f7515e79-1877-42e0-8953-a940900aa30d)
+
+6. Select "All Configurations" and "All Platforms" in Project.<br />
+![image](https://github.com/demianblogan/Game-Until_Last_Asteroid/assets/105989117/32a7b835-c44a-4807-88ef-f1aff00f1456)
 
 5. Connect .dll files in "Binaries" folder with the project:
 ![image](https://github.com/demianblogan/Game-The_Simplest_Tetris/assets/105989117/556c31da-136b-49d5-89b5-b9c700ae946b)
-
-6. Select "All Configurations" and "All Platforms".<br />
-![image](https://github.com/demianblogan/Game-Until_Last_Asteroid/assets/105989117/32a7b835-c44a-4807-88ef-f1aff00f1456)
 
 7. SFML library consists of three parts: .h/.cpp files (folder "include"), .lib files (folder "lib"), and .dll files. Let's link the "include" folder first. Go to the "C/C++" tab, find "Additional Include Directories", press the arrow on its right, and click "<Edit...>".<br />
 ![8](https://github.com/demianblogan/Game-Until_Last_Asteroid/assets/105989117/79cb8d11-aabb-40e5-897f-ddbf3fe087c1)
