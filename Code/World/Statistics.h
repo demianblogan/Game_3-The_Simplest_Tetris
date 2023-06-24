@@ -19,6 +19,8 @@ public:
 	void SetGameOver();
 
 private:
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default) const override;
+
 	static constexpr int FONT_SIZE = 24;
 	static constexpr int GAME_OVER_FONT_SIZE = 72;
 
@@ -34,6 +36,4 @@ private:
 	sf::Text textTutorialInfo;
 
 	sf::Font font;
-
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default) const override;
 };
