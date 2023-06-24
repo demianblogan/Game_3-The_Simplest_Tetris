@@ -17,7 +17,6 @@ public:
 	Game();
 
 	void Run();
-
 	static void PlaySound(Sound sound);
 
 private:
@@ -39,19 +38,6 @@ private:
 		BackgroundTheme
 	};
 
-	int GetScreenScaleFactor(sf::VideoMode size) const;
-
-	void Initialize();
-	void InitializeFonts();
-	void InitializeSounds();
-	void InitializeMusic();
-
-	void ProcessEvents();
-	void Update(float deltaTime);
-	void Render();
-
-	void CreateNewTetramino();
-
 	static ResourceManager<sf::Font, Font> fonts;
 	static ResourceManager<sf::SoundBuffer, Sound> sounds;
 	static ResourceManager<sf::Music, Music> music;
@@ -64,4 +50,17 @@ private:
 	Board board;
 	Statistics statistics;
 	float timeToMoveTetraminoDown;
+
+	int GetScreenScaleFactor(sf::VideoMode size) const;
+
+	void Initialize();
+	void InitializeFonts();
+	void InitializeSounds();
+	void InitializeMusic();
+
+	void ProcessEvents();
+	void Update(float deltaTime);
+	void Render();
+
+	void CreateNewTetramino();
 };
