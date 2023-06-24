@@ -8,6 +8,12 @@
 class Board : public sf::Transformable, public sf::Drawable
 {
 public:
+	static constexpr int DEFAULT_COLUMNS_COUNT = 10;
+	static constexpr int DEFAULT_ROWS_COUNT = 20;
+	static constexpr int DEFAULT_CELL_WIDTH = 24;
+	static constexpr int DEFAULT_CELL_HEIGHT = 24;
+	static constexpr int EMPTY_CELL_NUMBER = -1;
+
 	Board(int rows = DEFAULT_ROWS_COUNT, int columns = DEFAULT_COLUMNS_COUNT, int cellWidth = DEFAULT_CELL_WIDTH, int cellHeight = DEFAULT_CELL_HEIGHT);
 
 	void Spawn(Tetramino& tetramino);
@@ -22,13 +28,17 @@ public:
 	int GetWidth() const;
 	int GetHeight() const;
 
-	static constexpr int DEFAULT_COLUMNS_COUNT = 10;
-	static constexpr int DEFAULT_ROWS_COUNT = 20;
-	static constexpr int DEFAULT_CELL_WIDTH = 24;
-	static constexpr int DEFAULT_CELL_HEIGHT = 24;
-	static constexpr int EMPTY_CELL_NUMBER = -1;
-
 private:
+	const int rows, columns;
+	const int CELL_WIDTH;         // in pixels
+	const int CELL_HEIGHT;        // in pixels
+	const int width;
+	const int height;
+
+	bool isGameOver = false;
+	sf::VertexArray grid;         // is used to draw the grid lines of the game board
+	std::vector<int> gridContent; // rows * columns
+
 	bool Rotate(Tetramino& tetramino, int rotation);
 
 	void Add(const Tetramino& tetramino);
@@ -52,14 +62,4 @@ private:
 		bool visitedCells[][Tetramino::MATRIX_SIZE], bool& hasCollision);
 
 	void ShiftRowsDown(int bottomRowIndex);
-
-	const int rows, columns;
-	const int CELL_WIDTH;         // in pixels
-	const int CELL_HEIGHT;        // in pixels
-	const int width;
-	const int height;
-
-	bool isGameOver = false;
-	sf::VertexArray grid;         // is used to draw the grid lines of the game board
-	std::vector<int> gridContent; // rows * columns
 };
