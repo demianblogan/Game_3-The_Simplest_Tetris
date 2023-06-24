@@ -16,7 +16,7 @@ D           -> Rotate tetramino right<br />
 Escape      -> Close the game<br />
 
 ## **How to play?**<br />
-The game starts right after you lunch it. You get a random tetramino, and must place it at the bottom of the grid. After you place it, the next random tetramino appears.
+The game starts right after you launch it. You get a random tetramino, and must place it at the bottom of the grid. After you place it, the next random tetramino appears.
 You must build a row of them to destroy it and get points for this. If you build a tower of tetraminos that touches the top of the grid - you lose. You go to the next level
 every 10 completed rows. The more level you have - the more points you get from completed rows.
 
