@@ -8,12 +8,6 @@
 class Board : public sf::Transformable, public sf::Drawable
 {
 public:
-	static constexpr int DEFAULT_COLUMNS_COUNT = 10;
-	static constexpr int DEFAULT_ROWS_COUNT = 20;
-	static constexpr int DEFAULT_CELL_WIDTH = 24;
-	static constexpr int DEFAULT_CELL_HEIGHT = 24;
-	static constexpr int EMPTY_CELL_NUMBER = -1;
-
 	Board(int rows = DEFAULT_ROWS_COUNT, int columns = DEFAULT_COLUMNS_COUNT, int cellWidth = DEFAULT_CELL_WIDTH, int cellHeight = DEFAULT_CELL_HEIGHT);
 
 	void Spawn(Tetramino& tetramino);
@@ -27,6 +21,12 @@ public:
 
 	int GetWidth() const;
 	int GetHeight() const;
+
+	static constexpr int DEFAULT_COLUMNS_COUNT = 10;
+	static constexpr int DEFAULT_ROWS_COUNT = 20;
+	static constexpr int DEFAULT_CELL_WIDTH = 24;
+	static constexpr int DEFAULT_CELL_HEIGHT = 24;
+	static constexpr int EMPTY_CELL_NUMBER = -1;
 
 private:
 	bool Rotate(Tetramino& tetramino, int rotation);
