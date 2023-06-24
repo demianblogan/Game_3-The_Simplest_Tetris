@@ -20,16 +20,6 @@ public:
 		SIZE
 	};
 
-	Tetramino(Type type, int rotation);
-
-	Type GetType() const;
-	void SetRotation(int rotation);
-	int GetRotation() const;
-	void SetPosition(int x, int y);
-	int GetPositionX() const;
-	int GetPositionY() const;
-	float GetTimeSinceLastTransform() const; // in seconds
-
 	static constexpr unsigned ROTATIONS_COUNT = 4; // number of all possible rotations of all tetraminos
 	static constexpr unsigned MATRIX_SIZE = 4;     // size of the matrix of all tetraminos' representations
 
@@ -40,6 +30,16 @@ public:
 	static const int SHAPES[int(Type::SIZE)][ROTATIONS_COUNT][MATRIX_SIZE][MATRIX_SIZE];  // there is 7 tetraminos (1st dimention), 
 	                                                                                      // 4 rotations (2nd dimention), 
 	                                                                                      // 4*4 size each (3d and 4th dimentions).
+	Tetramino(Type type, int rotation);
+
+	Type GetType() const;
+	void SetRotation(int rotation);
+	int GetRotation() const;
+	void SetPosition(int x, int y);
+	int GetPositionX() const;
+	int GetPositionY() const;
+	float GetTimeSinceLastTransform() const; // in seconds
+
 private:
 	const Type type;
 	int rotation;
