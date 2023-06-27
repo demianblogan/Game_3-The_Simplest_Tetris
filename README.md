@@ -36,15 +36,14 @@ every 10 completed rows. The more level you have - the more points you get from 
 5. Now let's go to Project's Properties:<br />
 ![image](https://github.com/demianblogan/Game-The_Simplest_Tetris/assets/105989117/208d3fc0-f57a-42ea-82d0-3b4a320853b7)
 
-6. Let's link "Binaries Folder" to the project. Select "All Configurations" and "All Platforms" in Project. Then go to "Debugging" tab, find field "Working Directory" and type "$(ProjectDir)Binaries":<br />
+6. Let's link "Binaries" Folder to the project. Select "All Configurations" and "All Platforms". Then go to "Debugging" tab, find field "Working Directory" and type "$(ProjectDir)Binaries":<br />
 ![image](https://github.com/demianblogan/Game-The_Simplest_Tetris/assets/105989117/55605fb0-c65c-46e0-a198-3bb135f04d49)
 
-7. Now let's connect SFML library to the project. Let's start from "include" fodler. Go to the "C/C++" tab, find "Additional Include Directories", press the arrow on its right, and click "<Edit...>":<br />
+7. Now let's connect SFML library to the project. Let's start from "include" folder. Go to the "C/C++" tab, find "Additional Include Directories", press the arrow on its right, and click "<Edit...>":<br />
 ![image](https://github.com/demianblogan/Game-The_Simplest_Tetris/assets/105989117/be6838e9-11bd-413d-a910-13c50deae4c7)
 
 8. In the new window double-click on the empty line, type "$(ProjectDir)Libraries\SFML\include", and press "OK" at the bottom of the window:<br />
 ![image](https://github.com/demianblogan/Game-The_Simplest_Tetris/assets/105989117/5d0b9c04-0243-4a33-a541-2e50c82077a3)
-
 
 9. Now do the same with "lib" folder: go to the tab "Linker", find "Additional Library Directories", press the arrow on its right, and click "<Edit...>":<br />
 ![image](https://github.com/demianblogan/Game-The_Simplest_Tetris/assets/105989117/18723745-d2cf-4731-9cf4-8ec7b7df1ada)
