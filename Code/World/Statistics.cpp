@@ -47,8 +47,6 @@ void Statistics::AddRows(int newCompletedRowsCount)
 	textCompletedRowsCount.setString("Rows: " + std::to_string(completedRowsCount));
 
 	// Update the score info:
-	textScore.setString("Score: " + std::to_string(score));
-
 	// On every next level you get greater number of points when compliting rows.
 	switch (newCompletedRowsCount)
 	{
@@ -65,6 +63,7 @@ void Statistics::AddRows(int newCompletedRowsCount)
 		score += 1200 * (currentLevel + 1);
 		break;
 	}
+	textScore.setString("Score: " + std::to_string(score));
 
 	// Update the level info:
 	int oldLevel = currentLevel;
