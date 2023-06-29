@@ -3,17 +3,17 @@
 #include <cassert>
 
 Board::Board(int rows, int columns, int cellWidth, int cellHeight)
-	: rows(rows), columns(columns), CELL_WIDTH(cellWidth), CELL_HEIGHT(cellHeight)
-	, width(rows* CELL_WIDTH), height(columns* CELL_HEIGHT)
+	: ROWS(rows), COLUMNS(columns), CELL_WIDTH(cellWidth), CELL_HEIGHT(cellHeight)
+	, WIDTH(rows * CELL_WIDTH), HEIGHT(columns* CELL_HEIGHT)
 {
 	// Build the grid content, and set all elements to -1 (EMPTY_CELL_NUMBER).
 	gridContent.resize(rows * columns);
 	std::fill(gridContent.begin(), gridContent.end(), EMPTY_CELL_NUMBER);
 
 	// Build the shape borders.
-	const sf::Color GRID_COLOR(55, 55, 55); // Dark gray
-	int totalLinesCount = (rows + 1 + columns + 1) * 2; // "+1" is for extra line on bottom an right. "*2" is because every line has two vertices.
-	grid = sf::VertexArray(sf::Lines, totalLinesCount);
+	const sf::Color GRID_LINE_COLOR(55, 55, 55); // Dark gray
+	int totalVerticesCount = (rows + 1 + columns + 1) * 2; // "+1" is for extra line on bottom and right. "*2" is because every line has two vertices.
+	grid = sf::VertexArray(sf::Lines, totalVerticesCount);
 
 	// VertexArray is created. Let's set position and color for every its vertex.
 
@@ -27,8 +27,8 @@ Board::Board(int rows, int columns, int cellWidth, int cellHeight)
 		grid[rowIndex * 2] = sf::Vertex(sf::Vector2f(0, rowIndex * CELL_HEIGHT));
 		grid[rowIndex * 2 + 1] = sf::Vertex(sf::Vector2f(columns * CELL_WIDTH, rowIndex * CELL_HEIGHT));
 
-		grid[rowIndex * 2].color = GRID_COLOR;
-		grid[rowIndex * 2 + 1].color = GRID_COLOR;
+		grid[rowIndex * 2].color = GRID_LINE_COLOR;
+		grid[rowIndex * 2 + 1].color = GRID_LINE_COLOR;
 	}
 	// Draw all vertical lines:
 	for (int columnIndex = 0; columnIndex <= columns; columnIndex++)
@@ -40,8 +40,8 @@ Board::Board(int rows, int columns, int cellWidth, int cellHeight)
 		grid[(rows + 1) * 2 + columnIndex * 2] = sf::Vertex(sf::Vector2f(columnIndex * CELL_WIDTH, 0));
 		grid[(rows + 1) * 2 + columnIndex * 2 + 1] = sf::Vertex(sf::Vector2f(columnIndex * CELL_WIDTH, rows * CELL_HEIGHT));
 
-		grid[(rows + 1) * 2 + columnIndex * 2].color = GRID_COLOR;
-		grid[(rows + 1) * 2 + columnIndex * 2 + 1].color = GRID_COLOR;
+		grid[(rows + 1) * 2 + columnIndex * 2].color = GRID_LINE_COLOR;
+		grid[(rows + 1) * 2 + columnIndex * 2 + 1].color = GRID_LINE_COLOR;
 	}
 }
 
@@ -49,14 +49,14 @@ void Board::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	states.transform *= getTransform();
 
-	for (int rowIndex = 0; rowIndex < rows; rowIndex++)
+	for (int rowIndex = 0; rowIndex < ROWS; rowIndex++)
 	{
-		for (int columnIndex = 0; columnIndex < columns; columnIndex++)
+		for (int columnIndex = 0; columnIndex < COLUMNS; columnIndex++)
 		{
-			if (gridContent[rowIndex * columns + columnIndex] != EMPTY_CELL_NUMBER) // if the cell is not empty
+			if (gridContent[rowIndex * COLUMNS + columnIndex] != EMPTY_CELL_NUMBER) // if the cell is not empty
 			{
 				sf::RectangleShape rectangle(sf::Vector2f(CELL_WIDTH, CELL_HEIGHT));
-				rectangle.setFillColor(Tetramino::COLORS[gridContent[rowIndex * columns + columnIndex]]);
+				rectangle.setFillColor(Tetramino::COLORS[gridContent[rowIndex * COLUMNS + columnIndex]]);
 				rectangle.setPosition(columnIndex * CELL_WIDTH, rowIndex * CELL_HEIGHT);
 				target.draw(rectangle, states);
 			}
@@ -68,13 +68,13 @@ void Board::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 void Board::Spawn(Tetramino& tetramino)
 {
-	tetramino.SetPosition(columns / 2, 0); // Set on the top row, middle horizontal position.
+	tetramino.SetPosition(COLUMNS / 2, 0); // Set on the top row, middle horizontal position.
 
 	ClearFrom(tetramino);
 
 	// If there is at least one piece of other tetraminos on to top row - you will not be
 	// able to spawn another tetramino on it.
-	for (int columnIndex = 0; columnIndex < columns; columnIndex++)
+	for (int columnIndex = 0; columnIndex < COLUMNS; columnIndex++)
 	{
 		if (gridContent[columnIndex] != EMPTY_CELL_NUMBER)
 		{
@@ -214,14 +214,14 @@ void Board::PerformFloodFill(
 {
 	// Check limits (stop for recursive call):
 	if (tetraminoX < 0 || tetraminoX >= Tetramino::MATRIX_SIZE || tetraminoY < 0 || tetraminoY >= Tetramino::MATRIX_SIZE // is cell position is out of tetramino's bounds
-		|| gridX < 0 || gridX >= columns || gridY < 0 || gridY >= rows                                                   // if the current position on the game grid is outside the valid range
+		|| gridX < 0 || gridX >= COLUMNS || gridY < 0 || gridY >= ROWS                                                   // if the current position on the game grid is outside the valid range
 		|| visitedCells[tetraminoY][tetraminoX] == true                                                                  // if the current position of the tetramino has already been visited. 
 		|| Tetramino::SHAPES[int(type)][rotation][tetraminoY][tetraminoX] == 0)                                          // if the cell is empty
 		return;
 
 	visitedCells[tetraminoY][tetraminoX] = true;
 
-	gridContent[gridY * columns + gridX] = value;
+	gridContent[gridY * COLUMNS + gridX] = value;
 
 	// Do the same for bottom, right, top, and left cells:
 	PerformFloodFill(gridX, gridY - 1, tetraminoX, tetraminoY - 1, type, rotation, visitedCells, value);
@@ -244,8 +244,8 @@ void Board::PerformFloodFill(
 
 	visitedCells[tetraminoY][tetraminoX] = true;
 
-	if (gridX < 0 || gridX >= columns || gridY < 0 || gridY >= rows    // if the current position on the game grid is outside the valid range
-		|| gridContent[gridY * columns + gridX] != EMPTY_CELL_NUMBER)  //
+	if (gridX < 0 || gridX >= COLUMNS || gridY < 0 || gridY >= ROWS    // if the current position on the game grid is outside the valid range
+		|| gridContent[gridY * COLUMNS + gridX] != EMPTY_CELL_NUMBER)  //
 	{
 		hasCollision = false;
 		return;
@@ -260,11 +260,11 @@ void Board::PerformFloodFill(
 
 void Board::ShiftRowsDown(int bottomRowIndex)
 {
-	assert(bottomRowIndex < rows);
+	assert(bottomRowIndex < ROWS);
 
 	for (int row = bottomRowIndex; row > 0; row--) // going to bottom row
-		for (int columnIndex = 0; columnIndex < columns; columnIndex++)
-			gridContent[row * columns + columnIndex] = gridContent[(row - 1) * columns + columnIndex];
+		for (int columnIndex = 0; columnIndex < COLUMNS; columnIndex++)
+			gridContent[row * COLUMNS + columnIndex] = gridContent[(row - 1) * COLUMNS + columnIndex];
 }
 
 int Board::ClearRows(const Tetramino& tetramino)
@@ -273,14 +273,14 @@ int Board::ClearRows(const Tetramino& tetramino)
 
 	ClearFrom(tetramino);
 
-	for (int rowIndex = 0; rowIndex < rows; rowIndex++)
+	for (int rowIndex = 0; rowIndex < ROWS; rowIndex++)
 	{
 		// Find column with empty cell:
 		int emptyCellColumnIndex = 0;
-		for (; emptyCellColumnIndex < columns && gridContent[rowIndex * columns + emptyCellColumnIndex] != EMPTY_CELL_NUMBER; emptyCellColumnIndex++)
+		for (; emptyCellColumnIndex < COLUMNS && gridContent[rowIndex * COLUMNS + emptyCellColumnIndex] != EMPTY_CELL_NUMBER; emptyCellColumnIndex++)
 			continue;
 
-		if (emptyCellColumnIndex == columns) // if all cells in the row are occupied, the row should be cleared.
+		if (emptyCellColumnIndex == COLUMNS) // if all cells in the row are occupied, the row should be cleared.
 		{
 			ShiftRowsDown(rowIndex);
 			deletedRowsCount++;
@@ -294,10 +294,10 @@ int Board::ClearRows(const Tetramino& tetramino)
 
 int Board::GetWidth() const
 {
-	return width;
+	return WIDTH;
 }
 
 int Board::GetHeight() const
 {
-	return height;
+	return HEIGHT;
 }
