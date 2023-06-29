@@ -130,10 +130,6 @@ void Game::ProcessEvents()
 				board.Move(*currentTetramino, 0, 1);
 				break;
 
-			case sf::Keyboard::Up:
-				board.Move(*currentTetramino, 0, -1);
-				break;
-
 			case sf::Keyboard::Left:
 				board.Move(*currentTetramino, -1, 0);
 				break;
