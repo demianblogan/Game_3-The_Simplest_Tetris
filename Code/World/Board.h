@@ -29,11 +29,11 @@ public:
 	int GetHeight() const;
 
 private:
-	const int rows, columns;
+	const int ROWS, COLUMNS;
 	const int CELL_WIDTH;         // in pixels
 	const int CELL_HEIGHT;        // in pixels
-	const int width;
-	const int height;
+	const int WIDTH;
+	const int HEIGHT;
 
 	bool isGameOver = false;
 	sf::VertexArray grid;         // is used to draw the grid lines of the game board
